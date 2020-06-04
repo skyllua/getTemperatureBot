@@ -32,7 +32,7 @@ public class ArduinoRead extends Bot implements SerialPortEventListener {
     }
 
     /** The port we're normally going to use. */
-    private static final String PORT_NAMES[] = {"COM4"};
+    private static final String PORT_NAMES[] = {COMPORT};
     private  BufferedReader input;
     private OutputStream output;
     private static final int TIME_OUT = 2000;

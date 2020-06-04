@@ -21,6 +21,7 @@ public class Bot extends TelegramLongPollingBot {
     public static float FATAL_TEMPERATURE = 50.00f;
     public static long INTERVAL = 5 * 60 * 1000;
     public static long LAST_TIME_NOTIFICATION = 0;
+    public static String COMPORT = "COM4";
     public static boolean PRINT_STACK_TRACE = true;
     public static Map<String, Boolean> mainChatsID = new HashMap<String, Boolean>();
 

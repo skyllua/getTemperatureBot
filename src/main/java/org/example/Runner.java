@@ -17,6 +17,7 @@ public class Runner extends Bot {
             CRITICAL_TEMPERATURE = Float.parseFloat(properties.getProperty("CRITICAL_TEMPERATURE"));
             FATAL_TEMPERATURE = Float.parseFloat(properties.getProperty("FATAL_TEMPERATURE"));
             INTERVAL = Long.parseLong(properties.getProperty("INTERVAL"));
+            COMPORT = properties.getProperty("COMPORT");
             PRINT_STACK_TRACE = Boolean.parseBoolean(properties.getProperty("PRINT_STACK_TRACE"));
             System.out.println("-- Properties is loaded");
         } catch (IOException e) {
