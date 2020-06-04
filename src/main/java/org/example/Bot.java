@@ -1,3 +1,5 @@
+package org.example;
+
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.api.objects.Message;
@@ -5,7 +7,6 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bot extends TelegramLongPollingBot {
-    public static File file = new File("src\\main\\resources\\ChatList.txt");
+    public static File fileChatList = new File("src/main/resources/ChatList.txt");
+    public static File fileProperties = new File("src/main/resources/settings.properties");
     public static float WARNING_TEMPERATURE = 30.00f;
     public static float CRITICAL_TEMPERATURE = 40.00f;
     public static float FATAL_TEMPERATURE = 50.00f;
@@ -62,7 +64,7 @@ public class Bot extends TelegramLongPollingBot {
             if (!mainChatsID.containsKey(message.getChatId().toString())) {
                 mainChatsID.put(message.getChatId().toString(), true);
                 try {
-                    FileWriter fw = new FileWriter(file);
+                    FileWriter fw = new FileWriter(fileChatList);
                     for (String chat : mainChatsID.keySet()) {
                         fw.write(chat + "\n");
                     }

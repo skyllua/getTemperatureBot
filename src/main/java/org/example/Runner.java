@@ -1,3 +1,5 @@
+package org.example;
+
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
@@ -10,7 +12,7 @@ public class Runner extends Bot {
     public static void main(String[] args) {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("src\\main\\resources\\settings.properties"));
+            properties.load(new FileInputStream(fileProperties));
             WARNING_TEMPERATURE = Float.parseFloat(properties.getProperty("WARNING_TEMPERATURE"));
             CRITICAL_TEMPERATURE = Float.parseFloat(properties.getProperty("CRITICAL_TEMPERATURE"));
             FATAL_TEMPERATURE = Float.parseFloat(properties.getProperty("FATAL_TEMPERATURE"));
@@ -22,7 +24,7 @@ public class Runner extends Bot {
         }
 
         try {
-            FileReader fr = new FileReader(file);
+            FileReader fr = new FileReader(fileChatList);
             BufferedReader reader = new BufferedReader(fr);
             String line = "";
 
