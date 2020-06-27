@@ -52,9 +52,15 @@ public class ArduinoRead extends Bot implements SerialPortEventListener {
                 }
             }
         }
+
+        System.out.println("=========================================");
         if (portId == null) {
-            System.out.println("Could not find COM port.");
+            System.out.println("-- Could not find " + COMPORT + " port. Change COM port in config file!");
+//            Bot.logger.error("Could not find COM port.");
+
             return;
+        } else {
+            System.out.println("-- Success: connected to " + COMPORT);
         }
 
         try {
@@ -134,6 +140,9 @@ public class ArduinoRead extends Bot implements SerialPortEventListener {
                                     " *Temperature: *" + ArduinoRead.getTemperature() + " °C\n" +
                                     " *Heat Index: *" + ArduinoRead.getHeatIndex() + " °C");
                             LAST_TIME_NOTIFICATION = System.currentTimeMillis();
+//                            Bot.logger.warn(" *Humidity: *" + ArduinoRead.getHumidity() + " %\n" +
+//                                    " *Temperature: *" + ArduinoRead.getTemperature() + " °C\n" +
+//                                    " *Heat Index: *" + ArduinoRead.getHeatIndex() + " °C");
                         }
                     }
                 }

@@ -46,6 +46,8 @@ public class Runner extends Bot {
         try {
             bot.registerBot(new Bot());
             System.out.println("-- Bot is started");
+            System.out.println("=========================================");
+//            Bot.logger.info("-- Bot is started");
 
             ArduinoRead main = new ArduinoRead();
             main.initialize();
@@ -57,6 +59,9 @@ public class Runner extends Bot {
             t.start();
             System.out.println("=========================================");
             System.out.println("-- Start reading RX TX");
+            System.out.println("=========================================");
+//            Bot.logger.info("=========================================");
+//            Bot.logger.info("-- Start reading RX TX");
 
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();

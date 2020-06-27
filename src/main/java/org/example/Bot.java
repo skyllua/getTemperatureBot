@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.api.objects.Message;
@@ -24,6 +26,7 @@ public class Bot extends TelegramLongPollingBot {
     public static String COMPORT = "COM4";
     public static boolean PRINT_STACK_TRACE = true;
     public static Map<String, Boolean> mainChatsID = new HashMap<String, Boolean>();
+//    public static final Logger logger = LogManager.getLogger();
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
@@ -90,7 +93,9 @@ public class Bot extends TelegramLongPollingBot {
             }
         }
 
-        System.out.println(message.getChatId() + " :: " + message.getText());
+        if (message.getText().startsWith("/")) {
+            System.out.println(message.getChatId() + " :: " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName()  + " :: " + message.getText());
+        }
     }
 
     public String getBotUsername() {
