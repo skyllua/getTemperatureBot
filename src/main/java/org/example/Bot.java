@@ -42,7 +42,7 @@ public class Bot extends TelegramLongPollingBot {
             try {
                 execute(msg);
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                System.out.println("-- can't sand message to user: " + message.getChatId());
             }
         }
 
@@ -52,6 +52,19 @@ public class Bot extends TelegramLongPollingBot {
 
         if (message.getText().startsWith("/mute")) {
             mainChatsID.put(message.getChatId().toString(), false);
+        }
+
+        if (message.getText().startsWith("/msg") && message.getChatId() == 181199696) {
+            String text = message.getText().substring(4);
+            for (Map.Entry<String, Boolean> pair : mainChatsID.entrySet()) {
+                SendMessage msg = new SendMessage(pair.getKey(), text);
+                msg.enableMarkdown(true);
+                try {
+                    execute(msg);
+                } catch (TelegramApiException e) {
+                    System.out.println("-- can't sand message to user: " + pair.getKey());
+                }
+            }
         }
 
         if (message.getText().startsWith("/start")) {
