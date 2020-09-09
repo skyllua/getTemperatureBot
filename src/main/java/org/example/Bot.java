@@ -31,83 +31,85 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
 
-        if (message.getText().startsWith("/info")) {
-            SendMessage msg = new SendMessage()
-                    .enableMarkdown(true)
-                    .setChatId(message.getChatId())
-                    .setText("*Humidity: *" + ArduinoRead.getHumidity() + " %" +
-                            "\n*Temperature: *" + ArduinoRead.getTemperature() + " °C" +
-                            "\n*Heat Index: *" + ArduinoRead.getHeatIndex() + " °C");
-
-            try {
-                execute(msg);
-            } catch (TelegramApiException e) {
-                System.out.println("-- can't sand message to user: " + message.getChatId());
-            }
-        }
-
-        if (message.getText().startsWith("/unmute")) {
-            mainChatsID.put(message.getChatId().toString(), true);
-        }
-
-        if (message.getText().startsWith("/mute")) {
-            mainChatsID.put(message.getChatId().toString(), false);
-        }
-
-        if (message.getText().startsWith("/msg") && message.getChatId() == 181199696) {
-            String text = message.getText().substring(4);
-            for (Map.Entry<String, Boolean> pair : mainChatsID.entrySet()) {
-                SendMessage msg = new SendMessage(pair.getKey(), text);
-                msg.enableMarkdown(true);
-                try {
-                    execute(msg);
-                } catch (TelegramApiException e) {
-                    System.out.println("-- can't sand message to user: " + pair.getKey());
-                }
-            }
-        }
-
-        if (message.getText().startsWith("/start")) {
-            DeleteMessage deleteMessage = new DeleteMessage()
-                    .setMessageId(message.getMessageId())
-                    .setChatId(message.getChatId().toString());
-
-            try {
-                execute(deleteMessage);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-
-            if (!mainChatsID.containsKey(message.getChatId().toString())) {
-                mainChatsID.put(message.getChatId().toString(), true);
-                try {
-                    FileWriter fw = new FileWriter(fileChatList);
-                    for (String chat : mainChatsID.keySet()) {
-                        fw.write(chat + "\n");
-                    }
-
-                    fw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if (message.hasText()) {
+            if (message.getText().startsWith("/info")) {
                 SendMessage msg = new SendMessage()
                         .enableMarkdown(true)
                         .setChatId(message.getChatId())
-                        .setText("*Hi! I'll be notificate you about high temperature level in server room!\n\nNow:\n*" +
-                                "*Humidity: *" + ArduinoRead.getHumidity() + " %" +
+                        .setText("*Humidity: *" + ArduinoRead.getHumidity() + " %" +
                                 "\n*Temperature: *" + ArduinoRead.getTemperature() + " °C" +
                                 "\n*Heat Index: *" + ArduinoRead.getHeatIndex() + " °C");
 
                 try {
                     execute(msg);
                 } catch (TelegramApiException e) {
-                    e.printStackTrace();
+                    System.out.println("-- can't sand message to user: " + message.getChatId());
                 }
             }
-        }
 
-        if (message.getText().startsWith("/")) {
-            System.out.println(message.getChatId() + " :: " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName()  + " :: " + message.getText());
+            if (message.getText().startsWith("/unmute")) {
+                mainChatsID.put(message.getChatId().toString(), true);
+            }
+
+            if (message.getText().startsWith("/mute")) {
+                mainChatsID.put(message.getChatId().toString(), false);
+            }
+
+            if (message.getText().startsWith("/msg") && message.getChatId() == 181199696) {
+                String text = message.getText().substring(4);
+                for (Map.Entry<String, Boolean> pair : mainChatsID.entrySet()) {
+                    SendMessage msg = new SendMessage(pair.getKey(), text);
+                    msg.enableMarkdown(true);
+                    try {
+                        execute(msg);
+                    } catch (TelegramApiException e) {
+                        System.out.println("-- can't sand message to user: " + pair.getKey());
+                    }
+                }
+            }
+
+            if (message.getText().startsWith("/start")) {
+                DeleteMessage deleteMessage = new DeleteMessage()
+                        .setMessageId(message.getMessageId())
+                        .setChatId(message.getChatId().toString());
+
+                try {
+                    execute(deleteMessage);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+
+                if (!mainChatsID.containsKey(message.getChatId().toString())) {
+                    mainChatsID.put(message.getChatId().toString(), true);
+                    try {
+                        FileWriter fw = new FileWriter(fileChatList);
+                        for (String chat : mainChatsID.keySet()) {
+                            fw.write(chat + "\n");
+                        }
+
+                        fw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    SendMessage msg = new SendMessage()
+                            .enableMarkdown(true)
+                            .setChatId(message.getChatId())
+                            .setText("*Hi! I'll be notificate you about high temperature level in server room!\n\nNow:\n*" +
+                                    "*Humidity: *" + ArduinoRead.getHumidity() + " %" +
+                                    "\n*Temperature: *" + ArduinoRead.getTemperature() + " °C" +
+                                    "\n*Heat Index: *" + ArduinoRead.getHeatIndex() + " °C");
+
+                    try {
+                        execute(msg);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            if (message.getText().startsWith("/")) {
+                System.out.println(message.getChatId() + " :: " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " :: " + message.getText());
+            }
         }
     }
 
