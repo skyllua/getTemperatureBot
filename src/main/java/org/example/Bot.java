@@ -110,7 +110,7 @@ public class Bot extends TelegramLongPollingBot {
             }
 
             if (message.getText().startsWith("/")) {
-                System.out.println(new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(new Date().getDate()) + " :: " + message.getChatId() + " :: " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " :: " + message.getText());
+                System.out.println(new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(new Date(System.currentTimeMillis())) + " :: " + message.getChatId() + " :: " + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + " :: " + message.getText());
             }
         }
     }
