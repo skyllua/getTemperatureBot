@@ -112,7 +112,7 @@ public class ArduinoRead extends Bot implements SerialPortEventListener {
                      */
 
                     if (temperature != null && heatIndex != null) {
-                        if ((Float.parseFloat(temperature) > WARNING_TEMPERATURE || Float.parseFloat(heatIndex) > WARNING_TEMPERATURE) && (System.currentTimeMillis() - LAST_TIME_NOTIFICATION) > INTERVAL) {
+                        if ((Float.parseFloat(temperature) > WARNING_TEMPERATURE /*|| Float.parseFloat(heatIndex) > WARNING_TEMPERATURE*/) && (System.currentTimeMillis() - LAST_TIME_NOTIFICATION) > INTERVAL) {
                             for (Map.Entry<String, Boolean> pair : mainChatsID.entrySet()) {
                                 if (pair.getValue()) {
                                     String warning = "⚠️";
