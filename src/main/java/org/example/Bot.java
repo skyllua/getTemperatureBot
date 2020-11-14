@@ -18,8 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bot extends TelegramLongPollingBot {
-    public static File fileChatList = new File("src/main/resources/ChatList.txt");
-    public static File fileProperties = new File("src/main/resources/settings.properties");
+//    public static File fileChatList = new File("src/main/resources/ChatList.txt");
+//    public static File fileProperties = new File("src/main/resources/settings.properties");
+    public static File fileChatList = new File("target/classes/ChatList.txt");
+    public static File fileProperties = new File("target/classes/settings.properties");
     public static float WARNING_TEMPERATURE = 30.00f;
     public static float CRITICAL_TEMPERATURE = 40.00f;
     public static float FATAL_TEMPERATURE = 50.00f;
@@ -106,6 +108,8 @@ public class Bot extends TelegramLongPollingBot {
                     } catch (TelegramApiException e) {
                         e.printStackTrace();
                     }
+
+                    System.out.println("-- Registered new user: " + message.getChatId());
                 }
             }
 

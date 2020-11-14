@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fazecast.jSerialComm.SerialPort;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
@@ -19,7 +20,9 @@ public class Runner extends Bot {
             INTERVAL = Long.parseLong(properties.getProperty("INTERVAL"));
             COMPORT = properties.getProperty("COMPORT");
             PRINT_STACK_TRACE = Boolean.parseBoolean(properties.getProperty("PRINT_STACK_TRACE"));
+            System.out.println("=========================================");
             System.out.println("-- Properties is loaded");
+            System.out.println("=========================================");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,15 +52,10 @@ public class Runner extends Bot {
             System.out.println("=========================================");
 //            Bot.logger.info("-- Bot is started");
 
-            ArduinoRead main = new ArduinoRead();
-            main.initialize();
-            Thread t=new Thread() {
-                public void run() {
-                    try {Thread.sleep(1000000);} catch (InterruptedException    ie) {}
-                }
-            };
-            t.start();
-            System.out.println("=========================================");
+            ArduinoRead arduinoRead = new ArduinoRead();
+            Thread arduino = new Thread(arduinoRead);
+            arduino.start();
+
             System.out.println("-- Start reading RX TX");
             System.out.println("=========================================");
 //            Bot.logger.info("=========================================");
